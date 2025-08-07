@@ -4,12 +4,45 @@ export async function getData(url){
         const response = await fetch(url);
         const data = await response.json();
         return data
-    }catch{
+    }catch(error){
         console.error("Erreur lors du fetch :", error);
     }
 }
 
+//Fonction pour log un user
+export async function authentificationUser(email, password){
+    const baliseErreur = document.getElementById('error-message');
 
+    try{
+        //fecth en mode post pour envoyer les identifiants mot de pass
+        const demande = await fetch("http://localhost:5678/api/users/login",{
+                        method: 'POST',
+                        headers :{
+                        "Content-type": "application/json; charset=UTF-8"  
+                        },
+                        body :JSON.stringify({
+                            "email" : email,
+                            "password": password,
+                        })
+        })
+        
+        if(demande.status === 200){
+            const data = await demande.json();
+            baliseErreur.innerText = '';
+            return data;
+        }else{
+            if(demande.status === 401){
+                throw new Error("Utilisateur non autorisé");
+            }else{
+                throw new Error("Utilisateur introuvable");
+            }
+        } 
+    }catch(error){
+        
+        baliseErreur.innerText = error.message;
+    }
+
+}
 
 
 //Fonction de création de balise
@@ -103,6 +136,7 @@ export async function generateWorks(){
 
     return getWorks;
 }
+
 
 
 
