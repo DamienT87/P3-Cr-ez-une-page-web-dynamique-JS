@@ -1,4 +1,32 @@
-import { generateWorks } from './function.js'
+import { generateWorks, createBlock } from './function.js'
 
-generateWorks();
+//Création de la fonction main pour pouvoir attendre le résultat de ma fonction generate works.
+async function main(){
+    //Génération des projets et des boutons catégorie via l'API
+    const allWorks = await generateWorks();
+
+    //Filtre sur les boutons.
+    const boutons = document.querySelectorAll('.btn-categories');
+    boutons.forEach(bouton =>{
+        bouton.addEventListener("click", () => {
+            //Je récupére l'ID du bouton dans une variable
+            const boutonID = bouton.id;
+
+            //Je vide ma divGallery avec innerHTML à vide
+            const divGallery = document.querySelector('.gallery');
+            divGallery.innerHTML ="";
+            
+            //Filtre sur l'id des boutons
+            if(boutonID !== 'Tous'){
+                const filtreWorks = allWorks.filter(work => work.category.name === bouton.id)
+                createBlock(filtreWorks, divGallery);
+            }else{
+                const filtreWorks = allWorks.filter(work => work.category.name)
+                createBlock(filtreWorks, divGallery);
+            }
+        })
+    })
+}
+
+main();
 

@@ -9,6 +9,9 @@ export async function getData(url){
     }
 }
 
+
+
+
 //Fonction de création de balise
 function createBalise(balise, id, text, src, alt){
         const element = document.createElement(balise);
@@ -17,7 +20,7 @@ function createBalise(balise, id, text, src, alt){
         }
 
         if (text){
-            element.innerText = id;
+            element.innerText = text;
         }
 
         if (src){
@@ -31,34 +34,34 @@ function createBalise(balise, id, text, src, alt){
         return element;
 }
 
-
-export async function generateWorks(){
-    const getWorks = await getData("http://localhost:5678/api/works");
-
-    //Sélection de la div gallery
-    const divGallery = document.querySelector('.gallery');
-
-    //Boucle pour créer chaque élément
-    for(let i = 0; i < getWorks.length; i++ ){
-        
+export function createBlock(nomTableauSource, section){
+    
+    for(let i = 0; i < nomTableauSource.length; i++ ){
         //Construction de la balise <figure>
-        const figure = document.createElement('figure');
+        const figure = createBalise('figure');
 
         //Construction de la balise <img>
-        const img = document.createElement('img');
         //Attribution des valeur aux attributs src et alt de la balise <img>
-        img.src = getWorks[i].imageUrl;
-        img.alt = getWorks[i].title;
+        const img = createBalise('img', null, null, nomTableauSource[i].imageUrl, nomTableauSource[i].title)
 
         //Construction de la balise <figcaption> et attribution d'une valeur 
-        const figcaption = document.createElement('figcaption');
-        figcaption.innerText = getWorks[i].title;
+        const figcaption = createBalise('figcaption', null, nomTableauSource[i].title);
+
 
         //Imbrication des balises et de leur contenu
         figure.appendChild(img);
         figure.appendChild(figcaption);
-        divGallery.appendChild(figure);
+        section.appendChild(figure);
     }
+}
+
+
+export async function generateWorks(){
+    const getWorks = await getData("http://localhost:5678/api/works");
+
+
+   const divGallery = document.querySelector('.gallery');
+   createBlock(getWorks, divGallery);
 
     //Je récupére les categories de tout les projets dans un tableau
     const categoriesWork = getWorks.map(work => work.category.name);
@@ -68,6 +71,7 @@ export async function generateWorks(){
     //Puisque c'est un objet je le converti en tableau pour le parcourir plus facilement
     const categories = [...new Set(categoriesWork)];
     console.log(categories);
+
 
 
     //Section dans laquelle je vais rajouter la div où il y aura mes boutons
@@ -81,6 +85,7 @@ export async function generateWorks(){
 
     //Création du bouton "Tous"
     const btnTous = createBalise('button', 'Tous', 'Tous');
+    btnTous.classList.add('btn-categories');
     divCategorie.appendChild(btnTous);
 
 
@@ -95,5 +100,9 @@ export async function generateWorks(){
         divCategorie.appendChild(btnCategories);
 
     });
+
+    return getWorks;
 }
+
+
 
