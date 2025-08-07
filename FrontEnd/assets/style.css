@@ -186,3 +186,31 @@ footer nav ul {
 	margin: 2em
 }
 
+/*Rajout de code bouton*/
+.list-categorie{
+	display: flex;
+	justify-content: center;
+	margin-bottom: 2.5em;
+	gap: 10px
+}
+
+.btn-categories{
+	font-family: 'Syne';
+	font-size: 16px;
+	color: #1D6154;
+	border: solid 1px #1D6154;
+	background-color: transparent;
+	border-radius: 60px;
+	padding: 5px 15px 5px 15px;
+}
+
+.btn-categories:hover{
+	cursor:pointer;
+	background-color: #1D6154;
+	color: white;
+}
+
+.btn-categories:focus {
+	background-color: #1D6154;
+	color: white;
+}
