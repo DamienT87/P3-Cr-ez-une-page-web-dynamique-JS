@@ -1,4 +1,4 @@
-import { generateWorks, createBlock } from './function.js'
+import { generateWorks, createBlock, enableAdmin } from './function.js'
 
 //Création de la fonction main pour pouvoir attendre le résultat de ma fonction generate works.
 async function main(){
@@ -30,3 +30,6 @@ async function main(){
 
 main();
 
+if(localStorage.getItem('token')){
+    enableAdmin();
+}

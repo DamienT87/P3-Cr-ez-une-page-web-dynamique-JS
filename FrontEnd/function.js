@@ -38,7 +38,6 @@ export async function authentificationUser(email, password){
             }
         } 
     }catch(error){
-        
         baliseErreur.innerText = error.message;
     }
 
@@ -135,6 +134,30 @@ export async function generateWorks(){
     });
 
     return getWorks;
+}
+
+export function enableAdmin(){
+    //Je répère l'id de mon lien login dans le nav et le transforme en logout.
+    const loginLink = document.getElementById('login-link');
+    loginLink.innerText="logout";
+    loginLink.href="#";
+
+    //J'écoute le click sur mon lien logout pour enlever le token de mon localStorage et de reload ma page
+    loginLink.addEventListener("click", () =>{
+        localStorage.removeItem("token");
+        location.reload();
+    })
+
+    //Je configure l'appartion du "modifier" à côté du titre Mes Projets
+    //Je cible ma div "titre-projets" pour ajouter mon span à l'intérieur
+    const divTitreProjets = document.querySelector('.titre-projets');
+    const spanModifier = createBalise('span', 'btn-modifier');
+    spanModifier.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> modifier'
+    spanModifier.classList.add('modifier')
+
+    divTitreProjets.appendChild(spanModifier);
+
+
 }
 
 

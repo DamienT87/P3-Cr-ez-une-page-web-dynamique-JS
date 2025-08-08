@@ -1,0 +1,29 @@
+.titre-projets{
+    position: relative;
+}
+
+.modifier{
+  position: absolute;
+  right: 33%;
+  top: 32%;
+  cursor: pointer;
+}
+
+@media (max-width: 1028px) {
+  .titre-projets{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 10px
+  }
+
+  #portfolio h2{
+    margin-bottom: 0;
+  }
+
+  .modifier{
+    position: static;
+    margin-bottom: 10px;
+  }
+}

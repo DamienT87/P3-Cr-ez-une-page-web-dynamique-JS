@@ -16,13 +16,13 @@ function login(){
         //Utilisations de la fonction d'authentification
         const result = await authentificationUser(email, password);
 
-        //Je dépose le token d'authentification dans le localStorage
-        localStorage.setItem('token', result.token)
+        if(result){
+            //Je dépose le token d'authentification dans le localStorage
+            localStorage.setItem('token', result.token)
+            location.href = 'index.html'
 
-
-        console.log(result);
-        
-        
+            console.log(result);
+        }
     })
 }
 
