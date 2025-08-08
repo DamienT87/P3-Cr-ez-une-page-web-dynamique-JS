@@ -45,7 +45,7 @@ export async function authentificationUser(email, password){
 
 
 //Fonction de création de balise
-function createBalise(balise, id, text, src, alt){
+function createBalise(balise, id, text, src, alt, nomClass){
         const element = document.createElement(balise);
         if (id){
             element.id = id;
@@ -61,6 +61,10 @@ function createBalise(balise, id, text, src, alt){
 
         if (alt){
             element.alt = alt;
+        }
+        
+        if (nomClass){
+            element.className = nomClass;
         }
 
         return element;
@@ -158,6 +162,67 @@ export function enableAdmin(){
     divTitreProjets.appendChild(spanModifier);
 
 
+}
+
+export function openModale(works){
+    //Je récupère dans mon parametre de la fonction le resultat de l'API
+
+    //Je construit ma structure html.
+    const body = document.querySelector('body');
+
+    //<section class="background-modale"></section>
+    const sectionBackgroundModale = createBalise('section', null, null, null, null, 'background-modale');
+
+        //<div class="modale"></div>
+        const divModale = createBalise('div', null, null, null, null, 'modale');
+
+            //<i id="croix-fermeture" class="fa-solid fa-xmark"></i> --> La croix pour fermer la page
+            const croixFermeture = createBalise('i', 'croix-fermeture', null, null, null, "fa-solid fa-xmark");
+            //<h3>Galerie Photo</h3>
+            const titreGalleryPhoto = createBalise('h3', null, 'Galerie Photo');
+            //<div class="gallery-modale"></div>
+            const divGalleryModale = createBalise('div', null, null, null, null, 'gallery-modale');
+
+                works.forEach(work => {
+                    //<figure class="img-modale">
+                    const figureImgGallery = createBalise('figure', null, null, null, null, 'figure-modale');
+                    
+                        //<img>
+                        const imgGallery = createBalise('img', null, null, work.imageUrl, null, );
+                        //<i id="poubelle-suppression" class="fa-solid fa-trash-can"></i> --> la poubelle en haut a droite de l'image
+                        const poubelleImg = createBalise('i', 'poubelle-suppression', null, null, null, "fa-regular fa-trash-can");
+                        figureImgGallery.appendChild(imgGallery);
+                        figureImgGallery.appendChild(poubelleImg);
+                        divGalleryModale.appendChild(figureImgGallery);
+
+                });
+
+
+            //<button type="submit" class="btn-connexion">Ajouter une photo</button>
+            const btnAjouterPhoto = createBalise('button', 'btn-add-photo', 'Ajouter une photo', null, null, 'btn-connexion')
+
+
+
+    
+    divModale.appendChild(croixFermeture);
+    divModale.appendChild(titreGalleryPhoto);
+    divModale.appendChild(divGalleryModale);
+    divModale.appendChild(btnAjouterPhoto);
+
+    sectionBackgroundModale.appendChild(divModale);
+
+    body.appendChild(sectionBackgroundModale);
+
+
+}
+
+export function closeModale(elementFermeture){
+    elementFermeture.addEventListener("click", (event) =>{
+        if(event.target === elementFermeture){
+            const sectionModale = document.querySelector(".background-modale");
+            sectionModale.remove();
+        }
+    })
 }
 
 

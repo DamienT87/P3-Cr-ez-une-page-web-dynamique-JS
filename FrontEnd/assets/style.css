@@ -219,3 +219,15 @@ footer nav ul {
 	background-color: #1D6154;
 	color: white;
 }
+
+.btn-connexion{
+    width: 179px;
+    font-family: 'Syne';
+    font-size: 14px;
+    color: #FFFFFF;
+    background-color: #1D6154;
+    border: solid 1px #1D6154;
+    border-radius: 60px;
+    padding: 8px;
+}
+

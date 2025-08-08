@@ -1,4 +1,4 @@
-import { generateWorks, createBlock, enableAdmin } from './function.js'
+import { generateWorks, createBlock, enableAdmin, openModale, closeModale } from './function.js'
 
 //Création de la fonction main pour pouvoir attendre le résultat de ma fonction generate works.
 async function main(){
@@ -26,10 +26,25 @@ async function main(){
             }
         })
     })
+
+    if(localStorage.getItem('token')){
+        //les boutons de l'admin apparaisse grâce à cette fonction.
+        enableAdmin();
+
+        
+        const btnModifier = document.getElementById("btn-modifier");
+        
+        btnModifier.addEventListener("click", () =>{
+            //Ouverture de la modale
+            openModale(allWorks);
+
+            //Fermeture de la modale
+            const divBackgroundModale = document.querySelector(".background-modale");
+            const croixFermeture = document.getElementById("croix-fermeture");
+            closeModale(divBackgroundModale);
+            closeModale(croixFermeture);
+        })
+    }    
 }
 
 main();
-
-if(localStorage.getItem('token')){
-    enableAdmin();
-}

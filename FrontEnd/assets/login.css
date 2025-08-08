@@ -59,16 +59,7 @@ main a{
     color: #3D3D3D;
 }
 
-.btn-connexion{
-    width: 179px;
-    font-family: 'Syne';
-    font-size: 14px;
-    color: #FFFFFF;
-    background-color: #1D6154;
-    border: solid 1px #1D6154;
-    border-radius: 60px;
-    padding: 8px;
-}
+
 
 .error-message {
     color: white;
