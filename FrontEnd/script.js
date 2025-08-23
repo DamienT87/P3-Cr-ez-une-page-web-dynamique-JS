@@ -1,9 +1,9 @@
-import { generateWorks, createBlock, enableAdmin, openModale, closeModale } from './function.js'
+import { generateWorks, createBlock, enableAdmin, openModale, closeModale, deleteProject } from './function.js'
 
 //Création de la fonction main pour pouvoir attendre le résultat de ma fonction generate works.
 async function main(){
     //Génération des projets et des boutons catégorie via l'API
-    const allWorks = await generateWorks();
+    let allWorks = await generateWorks();
 
     //Filtre sur les boutons.
     const boutons = document.querySelectorAll('.btn-categories');
@@ -17,13 +17,10 @@ async function main(){
             divGallery.innerHTML ="";
             
             //Filtre sur l'id des boutons
-            if(boutonID !== 'Tous'){
-                const filtreWorks = allWorks.filter(work => work.category.name === bouton.id)
-                createBlock(filtreWorks, divGallery);
-            }else{
-                const filtreWorks = allWorks.filter(work => work.category.name)
-                createBlock(filtreWorks, divGallery);
-            }
+            const filtreWorks = bouton.id === 'Tous'
+                                        ? allWorks
+                                        : allWorks.filter(work => work.category?.name === bouton.id);
+            createBlock(filtreWorks, divGallery);
         })
     })
 
@@ -38,11 +35,35 @@ async function main(){
             //Ouverture de la modale
             openModale(allWorks);
 
+            const divGallery = document.querySelector('.gallery-modale');
+            divGallery.addEventListener('click', async (event) =>{
+                //Gestion de la suppression de projets
+                if(event.target.classList.contains('poubelle-suppression')){
+                    const dataIdProjet = event.target.dataset.id;
+                    const deleteOk = await deleteProject(dataIdProjet);
+
+                    if(deleteOk){
+                        //Suppression de la vignette image + poubelle (remonte a la balise figure et supprime)
+                        event.target.closest('figure').remove();
+
+                        const idNum = Number(dataIdProjet);
+                        allWorks = allWorks.filter(work => work.id !== idNum);
+                        const mainGallery = document.querySelector('.gallery');
+                        mainGallery.innerHTML = '';
+                        createBlock(allWorks, mainGallery);
+                    }
+                }
+            })
+
             //Fermeture de la modale
             const divBackgroundModale = document.querySelector(".background-modale");
             const croixFermeture = document.getElementById("croix-fermeture");
-            closeModale(divBackgroundModale);
-            closeModale(croixFermeture);
+
+            divBackgroundModale.addEventListener('click', (event) => {
+                if(event.target === divBackgroundModale || event.target === croixFermeture){
+                    closeModale();
+                }
+            })
         })
     }    
 }

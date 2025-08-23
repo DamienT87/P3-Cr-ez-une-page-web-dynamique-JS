@@ -45,27 +45,19 @@ export async function authentificationUser(email, password){
 
 
 //Fonction de création de balise
-function createBalise(balise, id, text, src, alt, nomClass){
-        const element = document.createElement(balise);
-        if (id){
-            element.id = id;
+function createBalise(balise, options = {}){
+    const element = document.createElement(balise);
+    // On parcourt les clés de l'objet "options"
+    for (const [key, value] of Object.entries(options)) {
+        if (key === "text") {
+            element.innerText = value;
+        } else if (key === "class") {
+            const classes = Array.isArray(value) ? value : String(value).split(/\s+/).filter(Boolean);
+            classes.forEach(c => element.classList.add(c));
+        } else {
+            element.setAttribute(key, value);
         }
-
-        if (text){
-            element.innerText = text;
-        }
-
-        if (src){
-            element.src = src;
-        }
-
-        if (alt){
-            element.alt = alt;
-        }
-        
-        if (nomClass){
-            element.className = nomClass;
-        }
+    }
 
         return element;
 }
@@ -78,10 +70,10 @@ export function createBlock(nomTableauSource, section){
 
         //Construction de la balise <img>
         //Attribution des valeur aux attributs src et alt de la balise <img>
-        const img = createBalise('img', null, null, nomTableauSource[i].imageUrl, nomTableauSource[i].title)
+        const img = createBalise('img', {src: nomTableauSource[i].imageUrl, alt: nomTableauSource[i].title})
 
         //Construction de la balise <figcaption> et attribution d'une valeur 
-        const figcaption = createBalise('figcaption', null, nomTableauSource[i].title);
+        const figcaption = createBalise('figcaption', {text: nomTableauSource[i].title});
 
 
         //Imbrication des balises et de leur contenu
@@ -120,7 +112,7 @@ export async function generateWorks(){
     sectionPortfolio.insertBefore(divCategorie, divGallery);
 
     //Création du bouton "Tous"
-    const btnTous = createBalise('button', 'Tous', 'Tous');
+    const btnTous = createBalise('button', {id: 'Tous', text: 'Tous'});
     btnTous.classList.add('btn-categories');
     divCategorie.appendChild(btnTous);
 
@@ -129,7 +121,7 @@ export async function generateWorks(){
     categories.forEach(category => {
         
         //Création du bouton et ajout du text et d'un id pour chaque bouton
-        const btnCategories = createBalise('button', category, category)
+        const btnCategories = createBalise('button', {id: category, text: category})
         btnCategories.classList.add('btn-categories');
 
         //Intégration de chaque bouton dans la div créée auparavant
@@ -155,9 +147,8 @@ export function enableAdmin(){
     //Je configure l'appartion du "modifier" à côté du titre Mes Projets
     //Je cible ma div "titre-projets" pour ajouter mon span à l'intérieur
     const divTitreProjets = document.querySelector('.titre-projets');
-    const spanModifier = createBalise('span', 'btn-modifier');
+    const spanModifier = createBalise('span', {id: 'btn-modifier', class:'modifier'});
     spanModifier.innerHTML = '<i class="fa-solid fa-pen-to-square"></i> modifier'
-    spanModifier.classList.add('modifier')
 
     divTitreProjets.appendChild(spanModifier);
 
@@ -171,43 +162,71 @@ export function openModale(works){
     const body = document.querySelector('body');
 
     //<section class="background-modale"></section>
-    const sectionBackgroundModale = createBalise('section', null, null, null, null, 'background-modale');
+    const sectionBackgroundModale = createBalise('section', {class: 'background-modale'});
 
         //<div class="modale"></div>
-        const divModale = createBalise('div', null, null, null, null, 'modale');
+        const divModale = createBalise('div', {class: 'modale'});
 
-            //<i id="croix-fermeture" class="fa-solid fa-xmark"></i> --> La croix pour fermer la page
-            const croixFermeture = createBalise('i', 'croix-fermeture', null, null, null, "fa-solid fa-xmark");
-            //<h3>Galerie Photo</h3>
-            const titreGalleryPhoto = createBalise('h3', null, 'Galerie Photo');
+            //<div class="btn-modale">
+            const divBtnModale = createBalise('div', {class: 'btn-modale'});
+                //<i id="croix-fermeture" class="fa-solid fa-xmark"></i> --> La croix pour fermer la page
+                const croixFermeture = createBalise('i', {id: 'croix-fermeture', class: "fa-solid fa-xmark"});
+                //<i id="croix-fermeture" class="fa-solid fa-xmark"></i> --> La croix pour fermer la page
+                const flecheRetour = createBalise('i', {id: 'fleche-retour', class: "fa-solid fa-arrow-left"});
+
+            divBtnModale.appendChild(flecheRetour);
+            divBtnModale.appendChild(croixFermeture);
+            
+
+            divModale.appendChild(divBtnModale);
+
             //<div class="gallery-modale"></div>
-            const divGalleryModale = createBalise('div', null, null, null, null, 'gallery-modale');
+            const divGalleryModale = createBalise('div', {class: 'gallery-modale'});
 
+                //<h3>Galerie Photo</h3>
+                const titreGalleryPhoto = createBalise('h3', {text: 'Galerie Photo'});
+
+                //<div class="gallery-projets">
+                const divGalleryProjets = createBalise('div', {class: 'gallery-projets'})
+
+
+                divGalleryModale.appendChild(titreGalleryPhoto);
+                divGalleryModale.appendChild(divGalleryProjets);
+                
                 works.forEach(work => {
                     //<figure class="img-modale">
-                    const figureImgGallery = createBalise('figure', null, null, null, null, 'figure-modale');
+                    const figureImgGallery = createBalise('figure', {class: 'figure-modale'});
                     
                         //<img>
-                        const imgGallery = createBalise('img', null, null, work.imageUrl, null, );
-                        //<i id="poubelle-suppression" class="fa-solid fa-trash-can"></i> --> la poubelle en haut a droite de l'image
-                        const poubelleImg = createBalise('i', 'poubelle-suppression', null, null, null, "fa-regular fa-trash-can");
+                        const imgGallery = createBalise('img', {src: work.imageUrl, alt: work.title});
+                        
+                        //<i id="poubelle-suppression" class="fa-regular fa-trash-can poubelle-suppression"></i> --> la poubelle en haut a droite de l'image
+                        const poubelleImg = createBalise('i', {class: "fa-regular fa-trash-can poubelle-suppression"});
+                        
+                        //Attribution d'un data-id sur poubelleImg pour pouvoir le cibler quand on voudra supprimer un projet
+                        poubelleImg.dataset.id = work.id;
+
+                        //Création du bloc figure et attachement de ce bloc à la div modale
+
                         figureImgGallery.appendChild(imgGallery);
                         figureImgGallery.appendChild(poubelleImg);
-                        divGalleryModale.appendChild(figureImgGallery);
+                        
+                        divGalleryProjets.appendChild(figureImgGallery);
+
 
                 });
 
 
-            //<button type="submit" class="btn-connexion">Ajouter une photo</button>
-            const btnAjouterPhoto = createBalise('button', 'btn-add-photo', 'Ajouter une photo', null, null, 'btn-connexion')
+                //<button type="submit" class="btn-connexion">Ajouter une photo</button>
+                const btnAjouterPhoto = createBalise('button', {id: 'btn-add-photo', text:'Ajouter une photo', class: 'btn-connexion'})
 
 
 
+    divGalleryModale.appendChild(btnAjouterPhoto);
     
-    divModale.appendChild(croixFermeture);
-    divModale.appendChild(titreGalleryPhoto);
     divModale.appendChild(divGalleryModale);
-    divModale.appendChild(btnAjouterPhoto);
+
+  
 
     sectionBackgroundModale.appendChild(divModale);
 
@@ -216,13 +235,42 @@ export function openModale(works){
 
 }
 
-export function closeModale(elementFermeture){
-    elementFermeture.addEventListener("click", (event) =>{
-        if(event.target === elementFermeture){
-            const sectionModale = document.querySelector(".background-modale");
-            sectionModale.remove();
+export function closeModale(){
+        const sectionModale = document.querySelector(".background-modale");
+        sectionModale.remove();
+}
+
+export async function deleteProject(id){
+    if(!id || !localStorage.getItem('token')){
+        return false;
+    }else{
+        const token = localStorage.getItem('token');
+        const url = `http://localhost:5678/api/works/${id}`;
+
+        try{
+            //Requete de suppression
+            const requestDelete = await fetch(url,{
+                        method: 'DELETE',
+                        headers: {
+                            "Authorization": `Bearer ${token}` 
+                        }
+                    })
+            //Test des différentes réponses 
+            if (requestDelete.ok) {
+                return true;
+            } else if (requestDelete.status === 401) {
+                console.error("Non autorisé");
+            } else if (requestDelete.status === 500) {
+                console.error("Comportement inattendu");
+            } else {
+                console.error("Suppression échouée :", requestDelete.status);
+            }
+            return false;
+        }catch (error){
+            console.error("Erreur: ", error);
+            return false
         }
-    })
+    }
 }
 
 
