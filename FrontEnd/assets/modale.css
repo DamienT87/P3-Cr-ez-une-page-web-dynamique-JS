@@ -33,7 +33,6 @@
 
 .invisible{
     display:none;
-    flex-direction: row-reverse;
 }
 
 .btn-modale #croix-fermeture{

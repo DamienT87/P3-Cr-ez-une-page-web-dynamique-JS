@@ -156,88 +156,44 @@ export function enableAdmin(){
 }
 
 export function openModale(works){
-    //Je récupère dans mon parametre de la fonction le resultat de l'API
+    //je récupère ma section globale de modale pour gérer la class invisible
+    const sectionBackgroundModale = document.querySelector('.background-modale');
+    sectionBackgroundModale.classList.remove('invisible');
 
-    //Je construit ma structure html.
-    const body = document.querySelector('body');
-
-    //<section class="background-modale"></section>
-    const sectionBackgroundModale = createBalise('section', {class: 'background-modale'});
-
-        //<div class="modale"></div>
-        const divModale = createBalise('div', {class: 'modale'});
-
-            //<div class="btn-modale">
-            const divBtnModale = createBalise('div', {class: 'btn-modale'});
-                //<i id="croix-fermeture" class="fa-solid fa-xmark"></i> --> La croix pour fermer la page
-                const croixFermeture = createBalise('i', {id: 'croix-fermeture', class: "fa-solid fa-xmark"});
-                //<i id="croix-fermeture" class="fa-solid fa-xmark"></i> --> La croix pour fermer la page
-                const flecheRetour = createBalise('i', {id: 'fleche-retour', class: "fa-solid fa-arrow-left"});
-
-            divBtnModale.appendChild(flecheRetour);
-            divBtnModale.appendChild(croixFermeture);
-            
-
-            divModale.appendChild(divBtnModale);
-
-            //<div class="gallery-modale"></div>
-            const divGalleryModale = createBalise('div', {class: 'gallery-modale'});
-
-                //<h3>Galerie Photo</h3>
-                const titreGalleryPhoto = createBalise('h3', {text: 'Galerie Photo'});
-
-                //<div class="gallery-projets">
-                const divGalleryProjets = createBalise('div', {class: 'gallery-projets'})
-
-
-                divGalleryModale.appendChild(titreGalleryPhoto);
-                divGalleryModale.appendChild(divGalleryProjets);
-                
-                works.forEach(work => {
-                    //<figure class="img-modale">
-                    const figureImgGallery = createBalise('figure', {class: 'figure-modale'});
-                    
-                        //<img>
-                        const imgGallery = createBalise('img', {src: work.imageUrl, alt: work.title});
-                        
-                        //<i id="poubelle-suppression" class="fa-regular fa-trash-can poubelle-suppression"></i> --> la poubelle en haut a droite de l'image
-                        const poubelleImg = createBalise('i', {class: "fa-regular fa-trash-can poubelle-suppression"});
-                        
-                        //Attribution d'un data-id sur poubelleImg pour pouvoir le cibler quand on voudra supprimer un projet
-                        poubelleImg.dataset.id = work.id;
-
-                        //Création du bloc figure et attachement de ce bloc à la div modale
-
-                        figureImgGallery.appendChild(imgGallery);
-                        figureImgGallery.appendChild(poubelleImg);
-                        
-                        divGalleryProjets.appendChild(figureImgGallery);
-
-
-                });
-
-
-                //<button type="submit" class="btn-connexion">Ajouter une photo</button>
-                const btnAjouterPhoto = createBalise('button', {id: 'btn-add-photo', text:'Ajouter une photo', class: 'btn-connexion'})
-
-
-
-    divGalleryModale.appendChild(btnAjouterPhoto);
+    //<div class="gallery-projets">
+    const divGalleryProjets = document.querySelector('.gallery-projets')
     
-    divModale.appendChild(divGalleryModale);
+    
+    works.forEach(work => {
+        //<figure class="img-modale">
+        const figureImgGallery = createBalise('figure', {class: 'figure-modale'});
+        
+            //<img>
+            const imgGallery = createBalise('img', {src: work.imageUrl, alt: work.title});
+            
+            //<i id="poubelle-suppression" class="fa-regular fa-trash-can poubelle-suppression"></i> --> la poubelle en haut a droite de l'image
+            const poubelleImg = createBalise('i', {class: "fa-regular fa-trash-can poubelle-suppression"});
+            
+            //Attribution d'un data-id sur poubelleImg pour pouvoir le cibler quand on voudra supprimer un projet
+            poubelleImg.dataset.id = work.id;
 
-  
+            //Création du bloc figure et attachement de ce bloc à la div modale
+            figureImgGallery.appendChild(imgGallery);
+            figureImgGallery.appendChild(poubelleImg);
+            
+            divGalleryProjets.appendChild(figureImgGallery);
 
-    sectionBackgroundModale.appendChild(divModale);
 
-    body.appendChild(sectionBackgroundModale);
-
+    });
 
 }
 
 export function closeModale(){
-        const sectionModale = document.querySelector(".background-modale");
-        sectionModale.remove();
+    const divGalleryProjets = document.querySelector('.gallery-projets');
+    divGalleryProjets.innerHTML = "";
+
+    const sectionModale = document.querySelector(".background-modale");
+    sectionModale.classList.add('invisible');
 }
 
 export async function deleteProject(id){
