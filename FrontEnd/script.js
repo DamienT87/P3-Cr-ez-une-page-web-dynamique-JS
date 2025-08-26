@@ -55,6 +55,35 @@ async function main(){
                 }
             })
 
+            const btnAddPhoto = document.getElementById('btn-add-photo');
+            btnAddPhoto.addEventListener("click", () =>{
+
+                //J'affiche ma div d'ajout projet et je cache ma div galllery au clic
+                const divAjoutProjets = document.querySelector('.ajout-projets');
+                divAjoutProjets.classList.remove('invisible');
+                divGallery.classList.add('invisible');
+
+                //J'affiche ma fleche retour et pause un addEventListener pour retourner 
+                const flecheRetour = document.getElementById('fleche-retour');
+                flecheRetour.classList.remove('cacher');
+
+                flecheRetour.addEventListener("click", () =>{
+                    //Remise à l'état initianle sur la gallery lors de la prochaine ouverture
+                    const divAjoutProjets = document.querySelector('.ajout-projets');
+                    divAjoutProjets.classList.add('invisible');
+
+                    const divGalleryModale = document.querySelector('.gallery-modale');
+                    divGalleryModale.classList.remove('invisible');
+
+                    const flecheRetour = document.getElementById('fleche-retour');
+                    flecheRetour.classList.add('cacher');
+                })
+
+                
+            })
+
+
+
             //Fermeture de la modale
             const divBackgroundModale = document.querySelector(".background-modale");
             const croixFermeture = document.getElementById("croix-fermeture");

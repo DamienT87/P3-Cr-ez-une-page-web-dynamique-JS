@@ -189,11 +189,23 @@ export function openModale(works){
 }
 
 export function closeModale(){
-    const divGalleryProjets = document.querySelector('.gallery-projets');
-    divGalleryProjets.innerHTML = "";
+  // Vide la galerie modale (pour regénérer proprement au prochain open)
+  const divGalleryProjets = document.querySelector('.gallery-projets');
+  divGalleryProjets.innerHTML = "";
 
-    const sectionModale = document.querySelector(".background-modale");
-    sectionModale.classList.add('invisible');
+  //Cache toute la modale
+  const sectionModale = document.querySelector(".background-modale");
+  sectionModale.classList.add('invisible');
+
+  //Remise à l'état initianle sur la gallery lors de la prochaine ouverture
+  const divAjoutProjets = document.querySelector('.ajout-projets');
+  divAjoutProjets.classList.add('invisible');
+
+  const divGalleryModale = document.querySelector('.gallery-modale');
+  divGalleryModale.classList.remove('invisible');
+
+  const flecheRetour = document.getElementById('fleche-retour');
+  flecheRetour.classList.add('cacher');
 }
 
 export async function deleteProject(id){

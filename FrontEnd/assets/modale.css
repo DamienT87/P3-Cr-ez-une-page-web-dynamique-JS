@@ -30,10 +30,12 @@
     align-items: center;
 
 }
-
-.invisible{
-    display:none;
+.cacher{
+    visibility: hidden;
+    pointer-events: none;
 }
+
+
 
 .btn-modale #croix-fermeture{
     font-size: 24px;
@@ -97,4 +99,78 @@
     cursor: pointer;
 }
 
+.ajout-projets{
+    min-width: 625px;
+    min-height: 550px;
+    width: 100%;
+}
 
+.ajout-projets form{
+    margin: 10px 80px 40px;
+    padding-bottom: 25px;
+    border-bottom: solid 1px #B3B3B3;
+}
+
+.ajout-images{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+    padding: 15px;
+    gap:10px;
+    background-color: #E8F1F6;
+    border: 0 solid;
+    border-radius: 3px;
+}
+
+.ajout-images input[type = "file"]{
+    display: none;
+}
+
+.ajout-images label{
+    border: solid 0px;
+    border-radius: 50px;
+    background-color: #CBD6DC;
+    font-size: 14px;
+    color: #306685;
+    padding: 8px 40px;
+    cursor:pointer;
+}
+
+.ajout-images figcaption{
+    font-size: 10px;
+}
+
+.form-champs{
+    display:flex;
+    flex-direction: column-reverse;
+    gap: 10px;
+    margin-bottom:20px;
+}
+
+.form-champs input, select{
+    border: 0 solid;
+    height: 51px;
+    filter: drop-shadow(0 4px 14px #00000017);
+    
+}
+
+form #btn-valider-photo {
+  position: absolute;
+  bottom : 4em;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+#form-categorie {
+  appearance: none;
+  background: url("./icons/chevron-down-solid-full.svg") no-repeat right 1.7em center;
+  background-color: white;
+  background-size: 14px;
+
+}
+
+.invisible{
+    display:none;
+}

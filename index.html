@@ -49,15 +49,43 @@
 	<section class="background-modale invisible">
 		<div class="modale">
 			<div class="btn-modale">
-				<i id="fleche-retour" class="fa-solid fa-arrow-left"></i>
+				<i id="fleche-retour" class="fa-solid fa-arrow-left cacher"></i>
 				<i id="croix-fermeture" class="fa-solid fa-xmark"></i>
 			</div>
 			<div class="gallery-modale">
 				<h3>Galerie Photo</h3>
 				<div class="gallery-projets">
 				</div>
-				<button id="btn-add-photo" class="btn-connexion">Ajouter une photo</button>
+				<button id="btn-add-photo" class="btn-connexion" type="button">Ajouter une photo</button>
 			</div>
+			<div class="ajout-projets invisible">
+				<h3>Ajout Photo</h3>
+				<form>
+					<div class="ajout-images">
+						<figure>
+							<img src="./FrontEnd/assets/images/picture-svgrepo-com 1.png" alt="">
+						</figure>
+						<input type="file" id="form-ajout-image" accept="image/png, image/jpeg">
+						<label for="form-ajout-image">+ Ajouter photo</label>
+						<figcaption>jpg, png: 4mo max</figcaption>
+					</div>
+					<div class="form-champs">
+						<input type="text" id="form-titre">
+						<label for="form-titre">Titre</label>
+					</div>
+					<div class="form-champs">
+						<select type="text" id="form-categorie">
+							<option value="" disabled selected></option>
+						</select>
+						<label for="form-categorie">Catégorie</label>
+					</div>
+					
+					<button id="btn-valider-photo" class="btn-connexion btn-valider-photo" type="submit" disabled>Valider</button>
+			
+				</form>
+			</div>
+
+
 
 
 		</div>
