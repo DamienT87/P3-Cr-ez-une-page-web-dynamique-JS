@@ -45,7 +45,7 @@ export async function authentificationUser(email, password){
 
 
 //Fonction de création de balise
-function createBalise(balise, options = {}){
+export function createBalise(balise, options = {}){
     const element = document.createElement(balise);
     // On parcourt les clés de l'objet "options"
     for (const [key, value] of Object.entries(options)) {
@@ -93,13 +93,10 @@ export async function generateWorks(){
 
     //Je récupére les categories de tout les projets dans un tableau
     const categoriesWork = getWorks.map(work => work.category.name);
-    console.log(categoriesWork);
 
     //Ici je converti mon Set(categoriesWork) qui me construit un objet avec les valeurs uniques du tableau categorieWork
     //Puisque c'est un objet je le converti en tableau pour le parcourir plus facilement
     const categories = [...new Set(categoriesWork)];
-    console.log(categories);
-
 
 
     //Section dans laquelle je vais rajouter la div où il y aura mes boutons
@@ -238,6 +235,20 @@ export async function deleteProject(id){
             console.error("Erreur: ", error);
             return false
         }
+    }
+}
+
+export function checkFormulaire(){
+    //Je récupère les champs de mon formulaire pour vérifié si ils ont été complété où non
+    const inputImage = document.getElementById('form-ajout-image');
+    const inputTitre = document.getElementById('form-titre');
+    const selectCategorie = document.getElementById('form-categorie');
+    const btnValider = document.getElementById('btn-valider-photo');
+
+    if(inputImage.files.length > 0 && inputTitre.value.trim() !== "" && selectCategorie.value !== "") {
+        btnValider.disabled = false;
+    }else{
+        btnValider.disabled = true;
     }
 }
 

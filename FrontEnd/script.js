@@ -1,4 +1,4 @@
-import { generateWorks, createBlock, enableAdmin, openModale, closeModale, deleteProject } from './function.js'
+import { generateWorks, createBalise, createBlock, enableAdmin, openModale, closeModale, deleteProject, checkFormulaire } from './function.js'
 
 //Création de la fonction main pour pouvoir attendre le résultat de ma fonction generate works.
 async function main(){
@@ -66,6 +66,7 @@ async function main(){
                 //J'affiche ma fleche retour et pause un addEventListener pour retourner 
                 const flecheRetour = document.getElementById('fleche-retour');
                 flecheRetour.classList.remove('cacher');
+                
 
                 flecheRetour.addEventListener("click", () =>{
                     //Remise à l'état initianle sur la gallery lors de la prochaine ouverture
@@ -78,6 +79,52 @@ async function main(){
                     const flecheRetour = document.getElementById('fleche-retour');
                     flecheRetour.classList.add('cacher');
                 })
+
+                const inputImage = document.getElementById('form-ajout-image');
+                const divPreview = document.querySelector('.ajout-images');
+
+                inputImage.addEventListener('change', () =>{
+                    //Je récupére l'image choisi grâce à mon input
+                    const imgSelect = inputImage.files[0];
+                    const reader = new FileReader();
+                    if(imgSelect){
+                        
+
+                        //Je lance la fonction une fois que mon reader à fini de charger.
+                        reader.onload = function(event){
+                            //Création d'une balise img 
+                            const previewImage = createBalise('img', {src: event.target.result, alt: imgSelect.name, class: 'img-preview'})
+
+                            //Je vide ma div ou ma preview va se placer
+                            divPreview.innerHTML="";
+                            divPreview.appendChild(previewImage);
+                        }
+                    }
+
+                    //Je lance la lecture de l'image via l'URL créée par readAsDataUrl
+                    reader.readAsDataURL(imgSelect);
+
+                })
+
+
+
+
+
+
+
+
+
+
+
+                
+
+                //Ecoute des différents inputs pour metttre le bouton en disabled ou non
+                const inputTitre = document.getElementById('form-titre');
+                const selectCategorie = document.getElementById('form-categorie');
+
+                inputImage.addEventListener('change', checkFormulaire);
+                inputTitre.addEventListener('input', checkFormulaire);
+                selectCategorie.addEventListener('change', checkFormulaire);
 
                 
             })
