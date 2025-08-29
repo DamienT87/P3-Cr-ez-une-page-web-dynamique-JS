@@ -106,8 +106,11 @@
 }
 
 .ajout-projets form{
-    margin: 10px 80px 40px;
+    margin: 50px 80px 40px;
     padding-bottom: 25px;
+    display:flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .ajout-images{
@@ -117,10 +120,7 @@
     align-items: center;
     margin: 20px 0;
     gap:10px;
-    background-color: #E8F1F6;
-    border: 0 solid;
-    border-radius: 3px;
-    padding: 0 100px 0 100px;
+
 }
 
 .ajout-images figure{
@@ -149,9 +149,19 @@
     font-size: 10px;
 }
 
-.ajout-images .img-preview{
+.container{
+    background-color: #E8F1F6;
+    border: 0 solid;
+    border-radius: 3px;
+    padding: 0 100px 0 100px;
+    display: flex;
+    justify-content: center;
+}
+
+.container .img-preview{
     height: 250px;
     width: 150px;
+
 }
 
 .form-champs{
@@ -165,7 +175,11 @@
     border: 0 solid;
     height: 51px;
     filter: drop-shadow(0 4px 14px #00000017);
-    
+    font-family: inherit;
+}
+
+.form-champs label{
+    font-weight: 550;
 }
 
 form #btn-valider-photo {

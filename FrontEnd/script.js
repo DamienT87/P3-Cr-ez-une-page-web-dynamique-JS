@@ -1,4 +1,4 @@
-import { generateWorks, createBalise, createBlock, enableAdmin, openModale, closeModale, deleteProject, checkFormulaire } from './function.js'
+import { generateWorks, createBalise, createBlock, enableAdmin, openModale, closeModale, deleteProject, checkFormulaire, resetFormAjoutProjets } from './function.js'
 
 //Création de la fonction main pour pouvoir attendre le résultat de ma fonction generate works.
 async function main(){
@@ -69,6 +69,9 @@ async function main(){
                 
 
                 flecheRetour.addEventListener("click", () =>{
+                    //Reset du formulaire
+                    resetFormAjoutProjets();
+
                     //Remise à l'état initianle sur la gallery lors de la prochaine ouverture
                     const divAjoutProjets = document.querySelector('.ajout-projets');
                     divAjoutProjets.classList.add('invisible');
@@ -81,7 +84,8 @@ async function main(){
                 })
 
                 const inputImage = document.getElementById('form-ajout-image');
-                const divPreview = document.querySelector('.ajout-images');
+                const divPreview = document.querySelector('.container');
+                const divAjoutImager = document.querySelector('.ajout-images');
 
                 inputImage.addEventListener('change', () =>{
                     //Je récupére l'image choisi grâce à mon input
@@ -96,7 +100,7 @@ async function main(){
                             const previewImage = createBalise('img', {src: event.target.result, alt: imgSelect.name, class: 'img-preview'})
 
                             //Je vide ma div ou ma preview va se placer
-                            divPreview.innerHTML="";
+                            divAjoutImager.classList.add('invisible');
                             divPreview.appendChild(previewImage);
                         }
                     }

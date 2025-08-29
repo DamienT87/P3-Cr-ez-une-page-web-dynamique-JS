@@ -253,5 +253,18 @@ export function checkFormulaire(){
 }
 
 
+export function resetFormAjoutProjets(){
+    //Je réinitialise les champs de mon formulaire
+    const divAjoutProjets = document.querySelector('.ajout-projets');
+    const form = divAjoutProjets.querySelector('form');
+    form.reset();
 
+    
+    const divAjoutImages = document.querySelector('.ajout-images');
+    if(divAjoutImages.classList.contains('invisible')){
+        const imgPreview = document.querySelector('.img-preview');
+        imgPreview.remove();
+        divAjoutImages.classList.remove('invisible');
+    }
+}
 
